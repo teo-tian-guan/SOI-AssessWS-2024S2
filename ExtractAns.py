@@ -1,6 +1,9 @@
 #### STEP 1A - Check and install the required Python libraries
 ## pandas
 ## selenium
+import subprocess
+import sys
+
 try:
     import pandas
     print("module 'pandas' is installed")
@@ -14,6 +17,14 @@ try:
 except ModuleNotFoundError:
     print("module 'selenium' is not installed")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "selenium"])
+    
+    
+try:
+    import webdriver_manager
+    print("module 'webdriver_manager' is installed")
+except ModuleNotFoundError:
+    print("module 'webdriver_manager' is not installed")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "webdriver_manager"])
 '''
 Step 1B has to be done manually
 STEP 1B - Download the chromedriver.exe file from 
@@ -34,12 +45,13 @@ driver_path = "C:\\Users\\teo_tian_guan\\Downloads\\chromedriver.exe"
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 import pandas as pd
 import time
 import os
 # Change the current working directory
-working_dir = r"C:\Users\teo_tian_guan\OneDrive - Republic Polytechnic\00 Sharing Folders\SOI Assessment Workshop 2024"
+working_dir = r"C:\Republic Polytechnic\temp"
 base_file_path = working_dir + "\\Sample\\"
 os.chdir(working_dir)
 
@@ -51,7 +63,15 @@ new_excel_file_path = r"Output.xlsx"
 # Create a Service object
 service = Service(executable_path=driver_path)
 # Initialize the WebDriver with the Service object
-driver = webdriver.Chrome(service=service)
+#driver = webdriver.Chrome(service=service)  ### This code is for the older version
+# Create a ChromeOptions object
+options = webdriver.ChromeOptions()
+
+# Use the Service class to specify the path to the ChromeDriver
+service = Service(ChromeDriverManager().install())
+
+# Initialize the driver with the service and options
+driver = webdriver.Chrome(service=service, options=options)
 
 extracted_content = []
 
