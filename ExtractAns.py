@@ -1,6 +1,9 @@
 #### STEP 1A - Check and install the required Python libraries
 ## pandas
 ## selenium
+## openpyxl
+## webdriver_manager
+
 import subprocess
 import sys
 
@@ -10,6 +13,13 @@ try:
 except ModuleNotFoundError:
     print("module 'pandas' is not installed")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pandas"])
+    
+try:
+    import openpyxl
+    print("module 'openpyxl' is installed")
+except ModuleNotFoundError:
+    print("module 'openpyxl' is not installed")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "openpyxl"])
 
 try:
     import selenium
@@ -25,6 +35,7 @@ try:
 except ModuleNotFoundError:
     print("module 'webdriver_manager' is not installed")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "webdriver_manager"])
+    
 '''
 Step 1B has to be done manually
 STEP 1B - Download the chromedriver.exe file from 
